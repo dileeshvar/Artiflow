@@ -1,0 +1,1 @@
+<font size="5"> All rights reserved</font>
