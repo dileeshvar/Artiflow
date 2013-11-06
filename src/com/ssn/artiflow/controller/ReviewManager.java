@@ -1,11 +1,14 @@
 package com.ssn.artiflow.controller;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.ssn.artiflow.models.Artifact;
 import com.ssn.artiflow.models.Comments;
@@ -58,21 +61,27 @@ public class ReviewManager {
 		Connection DBConn = null;
 		DBConn = ConnectDB.getConnection(SQLServerIP,databaseName);
 		PreparedStatement prep;
-		prep = DBConn.prepareStatement("insert into review (review_id,story_name,objective,project_id,author_id) values (?,?,?,?,?)");
+		prep = DBConn.prepareStatement("insert into review (review_id,story_name,objective,project_id,author_id,date_created) values (?,?,?,?,?,?)");
 		prep.setInt(1, review.getReview_id());
 		prep.setString(2, review.getStoryName());
 		prep.setString(3, review.getObjective());
 		prep.setInt(4, review.getProject_id());
 		prep.setInt(5, 1);
+		
+		long timeNow = Calendar.getInstance().getTimeInMillis();
+		Timestamp ts = new Timestamp(timeNow);
+		prep.setTimestamp(6, ts);		
+		
 		prep.executeUpdate();
 		
 		for(Artifact arti : review.getArtifacts()) {
-			prep = DBConn.prepareStatement("insert into artifact (artifact_id,artifact_name,review_id,Project_id,artifact_type_id) values (?,?,?,?,?)");
+			prep = DBConn.prepareStatement("insert into artifact (artifact_id,artifact_name,review_id,Project_id,artifact_type_id, date_created) values (?,?,?,?,?,?)");
 			prep.setInt(1, arti.getArtifact_id());
 			prep.setString(2, arti.getArtifact_name());
 			prep.setInt(3, arti.getReview_id());
 			prep.setInt(4, arti.getProject_id());
 			prep.setInt(5, arti.getArtifact_type().getArtifactTypeId());
+			prep.setTimestamp(6, ts);
 			prep.executeUpdate();
 		}
 		for(Reviewer rev1 : review.getReviewers()) {
@@ -187,7 +196,7 @@ public class ReviewManager {
 		return comments;
 	}
 
-	public Review updateComments(int userId, String comment){
+	public Review updateComments(int userId, String comment, boolean sigOff){
 		Review review = getReview(userId);
 		Connection dbCon = null;
 		dbCon = ConnectDB.getConnection("localhost", "artiflow");
@@ -198,6 +207,8 @@ public class ReviewManager {
 			preparedStatement.setInt(3, userId);
 			preparedStatement.setInt(4, review.getArtifacts().get(0).getArtifact_id());
 			preparedStatement.execute();
+			if(sigOff)
+				updateReview(review.getReview_id());
 			review.getArtifacts().get(0).setComments(getArtifactComments(review.getReview_id(), review.getArtifacts().get(0).getArtifact_id()));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -206,6 +217,24 @@ public class ReviewManager {
 		return review;
 	}
 
+	private void updateReview(int reviewID){
+		Connection dbCon = null;
+		dbCon = ConnectDB.getConnection("localhost", "artiflow");
+		try {
+			System.out.println(reviewID);
+			PreparedStatement preparedStatement = dbCon.prepareStatement("update review set end_date = ? where review_id = ?");
+			preparedStatement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			System.out.println(new Timestamp(System.currentTimeMillis()));
+			preparedStatement.setInt(2,reviewID);
+			int i = preparedStatement.executeUpdate();
+			System.out.println(i);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
 	private Reviewer getReviewerData(int userId) {
 		// TODO Auto-generated method stub
 		Reviewer reviewer = new Reviewer();

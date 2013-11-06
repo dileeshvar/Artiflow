@@ -75,7 +75,7 @@ public class initiateReviewServlet extends HttpServlet {
 		List<Artifact> artifacts = new ArrayList<Artifact>();
 		List<Reviewer> reviewers = new ArrayList<Reviewer>();
 		String projectName = "";
-		String fileName = "";
+		File fileName = null;
 		String fullFilePath = "";
 		boolean valid = false;
 		try {
@@ -142,7 +142,7 @@ public class initiateReviewServlet extends HttpServlet {
 						break;
 					}
 				} else {
-					fileName = item.getName();
+					fileName = new File(item.getName());
 					System.out.println("Got an uploaded file: "
 							+ item.getFieldName() + ", name = "
 							+ fileName);
@@ -154,7 +154,8 @@ public class initiateReviewServlet extends HttpServlet {
 						File dir = new File("UploadedFiles");
 						if(!dir.exists())
 							dir.mkdir();
-						fullFilePath = dir.getAbsolutePath()+"\\"+ fileName;
+						fullFilePath = dir.getAbsolutePath()+"\\"+ fileName.getName();
+						System.out.println("File Name: "+fullFilePath);
 						FileOutputStream fOut = new FileOutputStream(fullFilePath);
 						BufferedOutputStream buffOut = new BufferedOutputStream(fOut);
 						byte[] buffer = new byte[8192];

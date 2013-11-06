@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+  <context id="context1" >
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/artiflow" userId="root" password="root" />
+    <javaModelGenerator targetPackage="com.model" targetProject="Test_Artiflow" />
+    <sqlMapGenerator targetPackage="com.map" targetProject="Test_Artiflow" />
+    <table schema="Artiflow" tableName="user" >
+    </table>
+  </context>
+</generatorConfiguration>

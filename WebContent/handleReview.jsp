@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style/bubble.css">
 <link rel="stylesheet" type="text/css" href="style/style.css">
+<link rel="stylesheet" type="text/css" href="scripts/google-code-prettify/prettify.css">
 <script src="scripts/google-code-prettify/run_prettify.js?autoload=true&amp;skin=default&amp;lang=css" defer="defer"></script>
 <title>Artiflow - Handle Review</title>
 </head>
@@ -22,8 +23,9 @@ File artifact = new File(filePath);
 out.print("<h2><strong> File Name: "+artifact.getName()+"</strong></h2>");
 %>
 </div>
- <div style="width:65%; height :85%;float: left; position: fixed; overflow-x: auto; overflow-y: auto; border:solid;">
+ <div style="width:64%; height :85%;float: left; position: fixed; overflow-x: auto; overflow-y: auto; border:solid;">
         <pre class="prettyprint">
+        	<c:set var= "new" value="<br />" />
 			<c:import var="data" url="file:///${artifacts}"/>
 			<c:out value="${fn:trim(data)}"/>
 		</pre>
@@ -47,7 +49,7 @@ out.print("<h2><strong> File Name: "+artifact.getName()+"</strong></h2>");
 				<dd><textarea cols="50" rows="5" name="comments" id="comments" style="width:100%">
 </textarea></dd>
 			</dl>
-<input type="checkbox" value="Sign-off" name="jj" id="jj" />
+<input type="checkbox" value="Sign-off" name="Sign-off" id="Sign-off" />
 							<label>Sign-off</label>
 			<div id="submit_buttons">
 				<button type="reset">Reset</button>

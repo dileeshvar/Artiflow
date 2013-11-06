@@ -47,10 +47,11 @@ public class HandleReview extends HttpServlet {
 		Review review = new Review();
 		HttpSession session = request.getSession();
 		String comments = request.getParameter("comments");
+		boolean signOff = request.getParameter("Sign-off")!=null ? true : false;
 		User user = (User) session.getAttribute("User");
 		ReviewManager manager = new ReviewManager(SQLServerIP, dbName);
 		if(comments!=null && !comments.trim().equals("")){
-			review = manager.updateComments(user.getUserId(), comments);
+			review = manager.updateComments(user.getUserId(), comments, signOff);
 		}
 		else{
 			review = manager.getReview(user.getUserId());
