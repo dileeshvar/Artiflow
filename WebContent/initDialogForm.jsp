@@ -6,9 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Artiflow - Initiate Review</title>
-<link rel="stylesheet" type="text/css" href="style/style.css">
+<link rel="stylesheet" href="style/pure_style.css">
 <link rel="stylesheet" href="style/dragdrop.css" type="text/css"
 	media="screen">
+	<link rel="stylesheet" type="text/css" href="style/cssfonts-min.css">
 <script src="scripts/jquery-2.0.3.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -33,12 +34,11 @@
 <div class="header">
 	<jsp:include page="LoggedInheader.jsp"></jsp:include>
 </div>
-<body>
-	<br>
-	<br>
+<body class = "pure-skin-mine">
 	<hr>
-	<form name="initDialogForm" method="post"
+	<form class="pure-form pure-form-aligned" name="initDialogForm" method="post"
 		action="InitiateReviewServlet" enctype="multipart/form-data">
+		<fieldset>
 		<%
 			if (request.getAttribute("Status") != null
 					&& request.getAttribute("Status").toString()
@@ -60,71 +60,76 @@
 		<%
 			}
 		%>
-		<table>
-			<tr>
-				<th>Project Name<font color="red">*</font></th>
-				<td><select name="projectName">
+		<div class="pure-control-group">
+            <label for="name">Project Name</label>
+            <select name="projectName" placeholder="Select a Project" required>
 						<c:forEach var="test" items="${Project_List}">
 							<option>${test}</option>
 						</c:forEach>
-				</select></td>
-			</tr>
-			<tr>
-				<th>Story Name<font color="red">*</font></th>
-				<td><input type="text" name="storyname"></td>
-			</tr>
-			<tr>
-				<th>Objective of Review<font color="red">*</font></th>
-				<td><textarea name="objective"></textarea></td>
-			</tr>
-			<tr>
-				<th>Reviewers Name<font color="red">*</font></th>
-				<td><select name="mainReviewers" multiple="multiple">
+			</select>
+        </div>
+        <div class="pure-control-group">
+            <label for= "story">Story Name</label>
+			<input type="text" name="storyname" placeholder="Story Name" required>
+        </div>
+        <div class="pure-control-group">
+            <label for= "objective">Objective of Review</label>
+			<textarea name="objective" rows="4" cols="50" required></textarea>
+        </div>
+        <div class="pure-control-group">
+            <label for= "reviewers">Reviewers Name</label>
+			<select name="mainReviewers" multiple="multiple" required>
 						<option value="" selected="selected">None</option>
 						<c:forEach var="test" items="${Reviewers}">
 							<option>${test}</option>
 						</c:forEach>
-				</select></td>
-			</tr>
-			<tr>
-				<th>Optional Reviewers Name</th>
-				<td><select name="optReviewers" multiple="multiple">
+			</select>
+        </div>
+        <div class="pure-control-group">
+            <label for= "optionalReviewers">Optional Reviewers Name</label>
+			<select name="optReviewers" multiple="multiple">
 						<option value="" selected="selected">None</option>
 						<c:forEach var="test" items="${Reviewers}">
 							<option>${test}</option>
 						</c:forEach>
-				</select></td>
-			</tr>
-			<tr>
-				<th>Upload File<font color="red">*</font></th>
-				<td><p>
-						<input id="files-upload" type="file" multiple>
-					</p>OR
+			</select>
+        </div>
+        <div class="pure-control-group">
+            <label for= "artifactType">Artifact type</label>
+			<select name="artifactType">
+						<option value="Code">Code</option>
+						<option value="Product Backlog">Product Backlog</option>
+						<option value="Sprint Backlog">Sprint Backlog</option>
+			</select>
+        </div>
+        <div class="pure-control-group">
+            
+            <label for= "uploadFile">Upload Files</label>
+            <div class="pure-controls">
+            <fieldset class="pure-group">
+            <p>
+					<input id="files-upload" type="file" class="pure-button" multiple>
+			</p>OR
 					<p id="drop-area">
 						<span class="drop-instructions">or drag and drop files here</span>
 						<span class="drop-over">Drop files here!</span>
 					</p>
-					<button id="ShowProgress">Show Progress of upload</button>
-					<button id="HideProgress">Hide Progress of upload</button>
+					<button id="ShowProgress" class="pure-button">Show Progress of upload</button>
+					<button id="HideProgress" class="pure-button">Hide Progress of upload</button>
 					<div id="UploadProgress">
 						<ul id="file-list">
 							<li class="no-items">(no files uploaded yet)</li>
 						</ul>
 					</div>
 					<script type="text/javascript" src="scripts/dragdrop.js"></script>
-				</td>
-			</tr>
-			<tr>
-				<th>Artifact type<font color="red">*</font></th>
-				<td><select name="artifactType">
-						<option value="Code">Code</option>
-						<option value="Product Backlog">Product Backlog</option>
-						<option value="Sprint Backlog">Sprint Backlog</option>
-				</select></td>
-			</tr>
-		</table>
-		<input type="submit" name="submit" value="Initiate review"><input
-			type="reset" name="cancel" value="Cancel">
+            </fieldset>
+            </div>
+        </div>
+        <div class="pure-controls">
+		<input type="submit" name="submit" value="Initiate review" class="pure-button pure-button-primary">&nbsp;&nbsp;<input
+			type="reset" name="cancel" value="Cancel" class="pure-button pure-button-primary">
+		</div>
+		<fieldset>
 	</form>
 </body>
 </html>
