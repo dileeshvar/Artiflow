@@ -43,7 +43,6 @@ public class AuthenticationValidator implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-		System.out.println("Filter caught");
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("User");
@@ -54,7 +53,7 @@ public class AuthenticationValidator implements Filter {
 			} else {
 				((HttpServletResponse) response).sendRedirect("InitiateReviewScreenServlet");
 			}
-		} else if(!path.equals("/LoginServlet")) {
+		} else if((!(path.startsWith("/style") || path.startsWith("/script")))) {
 			if (user == null) {
 				req.setAttribute("Flag", "Error");
 				RequestDispatcher rd = req.getRequestDispatcher("login.jsp");
