@@ -37,7 +37,7 @@
 <body class = "pure-skin-mine">
 	<hr>
 	<form class="pure-form pure-form-aligned" name="initDialogForm" method="post"
-		action="InitiateReviewServlet" enctype="multipart/form-data">
+		action="InitiateReviewServlet" enctype="multipart/form-data" style=" padding-left:70px;">
 		<fieldset>
 		<%
 			if (request.getAttribute("Status") != null
@@ -62,7 +62,7 @@
 		%>
 		<div class="pure-control-group">
             <label for="name">Project Name</label>
-            <select name="projectName" placeholder="Select a Project" required>
+            <select name="projectName" placeholder="Select a Project" required class="pure-input-1-4">
 						<c:forEach var="test" items="${Project_List}">
 							<option>${test}</option>
 						</c:forEach>
@@ -70,15 +70,15 @@
         </div>
         <div class="pure-control-group">
             <label for= "story">Story Name</label>
-			<input type="text" name="storyname" placeholder="Story Name" required>
+			<input type="text" name="storyname" placeholder="Story Name" required class="pure-input-1-4">
         </div>
         <div class="pure-control-group">
             <label for= "objective">Objective of Review</label>
-			<textarea name="objective" rows="4" cols="50" required></textarea>
+			<textarea name="objective" class="pure-input-1-4" rows="4" cols="50" required></textarea>
         </div>
         <div class="pure-control-group">
             <label for= "reviewers">Reviewers Name</label>
-			<select name="mainReviewers" multiple="multiple" required>
+			<select name="mainReviewers" multiple="multiple" required class="pure-input-1-4">
 						<option value="" selected="selected">None</option>
 						<c:forEach var="test" items="${Reviewers}">
 							<option>${test}</option>
@@ -87,7 +87,7 @@
         </div>
         <div class="pure-control-group">
             <label for= "optionalReviewers">Optional Reviewers Name</label>
-			<select name="optReviewers" multiple="multiple">
+			<select name="optReviewers" multiple="multiple" class="pure-input-1-4">
 						<option value="" selected="selected">None</option>
 						<c:forEach var="test" items="${Reviewers}">
 							<option>${test}</option>
@@ -96,10 +96,11 @@
         </div>
         <div class="pure-control-group">
             <label for= "artifactType">Artifact type</label>
-			<select name="artifactType">
-						<option value="Code">Code</option>
-						<option value="Product Backlog">Product Backlog</option>
-						<option value="Sprint Backlog">Sprint Backlog</option>
+			<select name="artifactType" required class="pure-input-1-4">
+						<option value="" selected="selected">Choose an option</option>
+						<c:forEach var="test" items="${Artifact_Type}">
+							<option>${test}</option>
+						</c:forEach>
 			</select>
         </div>
         <div class="pure-control-group">
@@ -114,8 +115,8 @@
 						<span class="drop-instructions">or drag and drop files here</span>
 						<span class="drop-over">Drop files here!</span>
 					</p>
-					<button id="ShowProgress" class="pure-button">Show Progress of upload</button>
-					<button id="HideProgress" class="pure-button">Hide Progress of upload</button>
+					<button id="ShowProgress" class="pure-button" style = "font-size: 85%;">Show Progress of upload</button>
+					<button id="HideProgress" class="pure-button" style = "font-size: 85%;">Hide Progress of upload</button>
 					<div id="UploadProgress">
 						<ul id="file-list">
 							<li class="no-items">(no files uploaded yet)</li>

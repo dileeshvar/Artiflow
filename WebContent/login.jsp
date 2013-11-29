@@ -6,12 +6,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Artiflow - Login</title>
 <link rel="stylesheet" href="style/pure_style.css">
+<link rel="stylesheet" href="style/cssfonts-min.css">
 </head>
 <div class="header">
 <jsp:include page="header.jsp"></jsp:include>
 </div>
 <body class = "pure-skin-mine">
-<br><br><hr>
+<hr><br><br>
 <form class="pure-form pure-form-stacked" name="loginForm" method="post" action="LoginServlet">
 <% if(request.getAttribute("Flag") != null && request.getAttribute("Flag").equals("Error")) { %>
 <h4><font color="red"><center>Please give correct login credentials</center></font></h4>
@@ -20,7 +21,7 @@
 <% } %>
 <table align = "center">
 <tr><th>UserName<font color="red">*</font></th><td><input type="text" name="userName" placeholder="username" required></td></tr>
-<tr><th>Password<font color="red">*</font></th><td><input type="password" name="password" placeholder="username" required></td></tr>
+<tr><th>Password<font color="red">*</font></th><td><input type="password" name="password" placeholder="password" required></td></tr>
 </table>
 <br>
 <div align="center">
