@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xmlns="http://java.sun.com/xml/ns/javaee" 
-xmlns:web="http://java.sun.com/xml/ns/javaee" 
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>Test_Artiflow</display-name>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>ArtiflowDel</display-name>
   <welcome-file-list>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
     <description></description>
-    <display-name>initiateReviewServlet</display-name>
-    <servlet-name>initiateReviewServlet</servlet-name>
-    <servlet-class>com.ssn.artiflow.functions.initiateReviewServlet</servlet-class>
-    <init-param>
-      <param-name>file-upload</param-name>
-      <param-value>C:\Users\NEW\Desktop\SSN\Workspace\Test_Artiflow\WebContent\UploadedFiles</param-value>
-    </init-param>
+    <display-name>InitiateReviewServlet</display-name>
+    <servlet-name>InitiateReviewServlet</servlet-name>
+    <servlet-class>edu.ssn.sase.artiflow.controller.InitiateReviewServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>initiateReviewServlet</servlet-name>
-    <url-pattern>/initiateReviewServlet</url-pattern>
+    <servlet-name>InitiateReviewServlet</servlet-name>
+    <url-pattern>/InitiateReviewServlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>LoginServlet</display-name>
     <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>com.ssn.artiflow.functions.LoginServlet</servlet-class>
+    <servlet-class>edu.ssn.sase.artiflow.controller.LoginServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
@@ -35,7 +28,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     <description></description>
     <display-name>LogoutServlet</display-name>
     <servlet-name>LogoutServlet</servlet-name>
-    <servlet-class>com.ssn.artiflow.functions.LogoutServlet</servlet-class>
+    <servlet-class>edu.ssn.sase.artiflow.controller.LogoutServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
@@ -45,7 +38,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     <description></description>
     <display-name>HandleReview</display-name>
     <servlet-name>HandleReview</servlet-name>
-    <servlet-class>com.ssn.artiflow.functions.HandleReview</servlet-class>
+    <servlet-class>edu.ssn.sase.artiflow.controller.HandleReview</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>HandleReview</servlet-name>
@@ -55,7 +48,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
     <description></description>
     <display-name>TimeLineCodeServlet</display-name>
     <servlet-name>TimeLineCodeServlet</servlet-name>
-    <servlet-class>com.ssn.artiflow.functions.TimeLineCodeServlet</servlet-class>
+    <servlet-class>edu.ssn.sase.artiflow.controller.TimeLineCodeServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>TimeLineCodeServlet</servlet-name>
