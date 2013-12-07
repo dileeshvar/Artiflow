@@ -154,8 +154,7 @@ public class InitiateReviewServlet extends HttpServlet {
 			}
 			if(!valid) {
 				request.setAttribute("Status", "Failure");
-				RequestDispatcher rd = request.getRequestDispatcher("/initDialogForm.jsp");
-				rd.forward(request, response);		
+				response.sendRedirect("InitiateReviewScreenServlet");
 			} else {
 				review.setReviewers(reviewers);
 				review.setArtifacts(artifacts);
@@ -164,11 +163,11 @@ public class InitiateReviewServlet extends HttpServlet {
 				init.initiateReview(review, reviewMgr);
 				request.setAttribute("Status", "Success");
 				request.getSession().setAttribute("Upload-File", null);
-				RequestDispatcher rd = request.getRequestDispatcher("/initDialogForm.jsp");
-				rd.forward(request, response);
+				response.sendRedirect("InitiateReviewScreenServlet");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			request.setAttribute("Status", "Error");
+			response.sendRedirect("InitiateReviewScreenServlet");
 		}
 	}
 }
