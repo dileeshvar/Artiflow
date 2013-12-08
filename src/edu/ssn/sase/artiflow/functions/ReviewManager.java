@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import edu.ssn.sase.artiflow.models.Artifact;
 import edu.ssn.sase.artiflow.models.Comments;
@@ -253,5 +254,60 @@ public class ReviewManager {
 		}
 
 		return reviewer;
+	}
+	
+	public List<String> getUserMailIds(Review review) {
+		Connection dbCon = null;
+		dbCon = ConnectDB.getConnection("localhost", "artiflow");
+		List<String> userEmail = new ArrayList<String>();
+		List<Integer> userids = getUserIds(review);
+		for(int id : userids) {
+			PreparedStatement preparedStatement;
+			try {
+				preparedStatement = dbCon.prepareStatement("select email_id from user where user_id = ?");
+				preparedStatement.setInt(1, id);
+				ResultSet res = preparedStatement.executeQuery();
+				while(res.next()) {
+					userEmail.add(res.getString(1));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return userEmail;
+	}
+
+	private List<Integer> getUserIds(Review review) {
+		List<Integer> users = new ArrayList<Integer>();
+		Connection dbCon = null;
+		dbCon = ConnectDB.getConnection("localhost", "artiflow");
+		try {
+			System.out.println(review.getReview_id());
+			users.add(review.getAuthor_id());
+			PreparedStatement preparedStatement = dbCon.prepareStatement("select user_id from reviewers where review_id = ?");
+			preparedStatement.setInt(1, review.getReview_id());
+			ResultSet res = preparedStatement.executeQuery();
+			while(res.next()) {
+				users.add(res.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	public String getProjectName(int project_id) throws SQLException {
+		Connection DBConn = null;
+		DBConn = ConnectDB.getConnection(SQLServerIP,databaseName);
+		PreparedStatement statement = DBConn.prepareStatement("select * from project where project_id=?");
+		statement.setInt(1, project_id);
+		ResultSet rs = statement.executeQuery();
+		String projName = "";
+		while(rs.next()) {
+			projName = rs.getString(2);
+		}
+		DBConn.close();
+		return projName;
 	}
 }

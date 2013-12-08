@@ -29,6 +29,18 @@ public class UserManager {
 		return userId;
 	}
 	
+	public String getUserName(int user_id) throws SQLException {
+		Connection DBConn = null;
+		DBConn = ConnectDB.getConnection(SQLServerIP,databaseName);
+		Statement statement = DBConn.createStatement();
+		ResultSet rs = statement.executeQuery("select user_name from user where user_id='"+ user_id+"'");
+		String userName = "";
+		while(rs.next()) {
+			userName = rs.getString(1);
+		}
+		return userName;
+	}
+	
 	public int getReviewerId() throws SQLException {
 		Connection DBConn = null;
 		DBConn = ConnectDB.getConnection(SQLServerIP,databaseName);
@@ -46,14 +58,13 @@ public class UserManager {
 		Connection DBConn = null;
 		DBConn = ConnectDB.getConnection(SQLServerIP,databaseName);
 		Statement statement = DBConn.createStatement();
-		ResultSet rs = statement.executeQuery("select user_id from user where user_name='"+ userName+"' and password = '"+password+"'");
-		boolean isValid = false;
+		ResultSet rs = statement.executeQuery("select user_id, email_id from user where user_name='"+ userName+"' and password = '"+password+"'");
 		User user = null;
 		while(rs.next()) {
-			int i = rs.getInt(1);
 			user = new User();
-			user.setUserId(i);
+			user.setUserId(rs.getInt(1));
 			user.setUserName(userName);
+			user.setEmail(rs.getString(2));
 		}
 		return user;
 	}
