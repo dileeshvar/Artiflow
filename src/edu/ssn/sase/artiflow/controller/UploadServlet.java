@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import edu.ssn.sase.artiflow.functions.ReviewManager;
 
 /**
  * Servlet implementation class UploadServlet
@@ -48,7 +50,7 @@ public class UploadServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		HttpSession session = request.getSession();
 		response.setContentType("text/html;charset=UTF-8");
 		// Create path components to save the file
 		final Part filePart = request.getPart("File");
@@ -56,11 +58,28 @@ public class UploadServlet extends HttpServlet {
 
 		InputStream input = filePart.getInputStream();
 		BufferedInputStream bis = new BufferedInputStream(input, 4096);
-		File dir = new File("UploadedFiles");
-		if(!dir.exists())
+		String resource = getServletContext().getRealPath("UploadedFiles");
+		System.out.println(getServletContext().getContextPath());
+		File dir = new File(resource);
+		if (!dir.exists())
 			dir.mkdir();
-		File targetFile = new File(dir.getAbsolutePath()+"\\"+ System.currentTimeMillis()
-				+ "_" + fileName);
+		String reviewFolderName = "";
+
+		ReviewManager revMgr = new ReviewManager("localhost", "artiflow");
+		try {
+			int nextReviewId = revMgr.getReviewId();
+			reviewFolderName = "ReviewFolder" + nextReviewId;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		File reviewFolder = new File(resource + "\\" + reviewFolderName);
+		if (!reviewFolder.exists()) {
+			reviewFolder.mkdir();
+		}
+		File targetFile = new File(resource + "\\" + reviewFolderName + "\\"
+				+ System.currentTimeMillis() + "_" + fileName);
+
 		BufferedOutputStream bos = new BufferedOutputStream(
 				new FileOutputStream(targetFile), 4096);
 		int theChar;
@@ -69,12 +88,13 @@ public class UploadServlet extends HttpServlet {
 		}
 		bos.close();
 		bis.close();
-		HttpSession session = request.getSession();
 		String filePath = (String) session.getAttribute("Upload-File");
-		if(filePath == null || filePath.equals("")) {
-			filePath = targetFile.getAbsolutePath();
+		if (filePath == null || filePath.equals("")) {
+			filePath = "UploadedFiles\\" + reviewFolderName + "\\"
+					+ targetFile.getName();
 		} else {
-			filePath = filePath +";;;" + targetFile.getAbsolutePath();
+			filePath = filePath + ";;;" + "UploadedFiles\\" + reviewFolderName
+					+ "\\" + targetFile.getName();
 		}
 		session.setAttribute("Upload-File", filePath);
 	}

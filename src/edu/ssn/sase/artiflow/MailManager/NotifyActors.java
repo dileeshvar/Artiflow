@@ -59,6 +59,8 @@ public class NotifyActors extends Thread
 			String proxyHost = serverDetails.get("ProxyHostURL");
 			String proxyPort = serverDetails.get("ProxyPort");
 			props.setProperty("proxySet",String.valueOf(proxyNeeded));
+			props.setProperty("mail.smtp.socks.host",proxyHost);
+			props.setProperty("mail.smtp.socks.port",proxyPort);
 			props.setProperty("socksProxyHost",proxyHost);
 			props.setProperty("socksProxyPort",proxyPort);
 		} 

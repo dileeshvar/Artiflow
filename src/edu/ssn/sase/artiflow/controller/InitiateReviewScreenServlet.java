@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ssn.sase.artiflow.functions.ArtiflowManager;
+import edu.ssn.sase.artiflow.functions.ReviewManager;
 import edu.ssn.sase.artiflow.models.User;
 
 /**
