@@ -1,9 +1,6 @@
 package edu.ssn.sase.artiflow.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import edu.ssn.sase.artiflow.UserValidator.ValidateUser;
 import edu.ssn.sase.artiflow.UserValidator.ValidatorInterface;
-import edu.ssn.sase.artiflow.functions.ArtiflowManager;
 import edu.ssn.sase.artiflow.functions.UserManager;
 import edu.ssn.sase.artiflow.models.User;
 

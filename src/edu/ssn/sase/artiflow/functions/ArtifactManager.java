@@ -1,30 +1,28 @@
 package edu.ssn.sase.artiflow.functions;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
+import edu.ssn.sase.artiflow.dal.ArtifactDal;
 import edu.ssn.sase.artiflow.models.ArtifactType;
-import edu.ssn.sase.artiflow.utils.ConnectDB;
 
 public class ArtifactManager {
 
-	private String SQLServerIP, databaseName;
-	
+	ArtifactDal dal = new ArtifactDal();
+
 	public ArtifactManager(String sqlServerIP, String databaseName) {
 		super();
-		SQLServerIP = sqlServerIP;
-		this.databaseName = databaseName;
+		try {
+			dal.initiateParams(sqlServerIP, databaseName);
+		} catch (SQLException e) {
+			System.out.println("Failure Happened!!!");
+		}
 	}
-	
+
 	public int getArtifactId() throws SQLException {
-		Connection DBConn = null;
-		DBConn = ConnectDB.getConnection(SQLServerIP,databaseName);
-		Statement statement = DBConn.createStatement();
-		ResultSet rs = statement.executeQuery("select count(*) from artifact");
+		ResultSet rs = dal.getCurrentArtifactCount();
 		int nextId = 0;
-		while(rs.next()) {
+		while (rs.next()) {
 			int maxId = rs.getInt(1);
 			nextId = ++maxId;
 		}
@@ -32,13 +30,10 @@ public class ArtifactManager {
 	}
 
 	public ArtifactType getArtifactType(String s) throws SQLException {
-		Connection DBConn = null;
-		DBConn = ConnectDB.getConnection(SQLServerIP,databaseName);
-		Statement statement = DBConn.createStatement();
-		ResultSet rs = statement.executeQuery("select artifact_type_id from artifact_type where artifact_type_name='"+s+"'");
+		ResultSet rs = dal.getArtifactType(s);
 		ArtifactType artType = new ArtifactType();
 		artType.setArtifactType(s);
-		while(rs.next()) {
+		while (rs.next()) {
 			int artTypeId = rs.getInt(1);
 			artType.setArtifactTypeId(artTypeId);
 		}
