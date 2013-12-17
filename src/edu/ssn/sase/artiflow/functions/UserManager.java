@@ -1,59 +1,60 @@
 package edu.ssn.sase.artiflow.functions;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
+import edu.ssn.sase.artiflow.dal.UserDal;
 import edu.ssn.sase.artiflow.models.User;
-import edu.ssn.sase.artiflow.utils.ConnectDB;
 
 public class UserManager {
-	private String SQLServerIP, databaseName;
-	
+	private UserDal dal = new UserDal();
+
 	public UserManager(String sqlServerIP, String databaseName) {
 		super();
-		SQLServerIP = sqlServerIP;
-		this.databaseName = databaseName;
+		try {
+			dal.initiateParams(sqlServerIP, databaseName);
+		} catch (SQLException e) {
+			System.out.println("Failure Happened!!!");
+		}
 	}
 
 	public int getUserId(String user_name) throws SQLException {
-		Connection DBConn = null;
-		DBConn = ConnectDB.getConnection(SQLServerIP,databaseName);
-		Statement statement = DBConn.createStatement();
-		ResultSet rs = statement.executeQuery("select user_id from user where user_name='"+ user_name+"'");
+		ResultSet rs = dal.getUserIdFromUserName(user_name);
 		int userId = 0;
-		while(rs.next()) {
+		while (rs.next()) {
 			userId = rs.getInt(1);
 		}
 		return userId;
 	}
-	
+
+	public String getUserName(int user_id) throws SQLException {
+		ResultSet rs = dal.getUserNameFromUserId(user_id);
+		String userName = "";
+		while (rs.next()) {
+			userName = rs.getString(1);
+		}
+		return userName;
+	}
+
 	public int getReviewerId() throws SQLException {
-		Connection DBConn = null;
-		DBConn = ConnectDB.getConnection(SQLServerIP,databaseName);
-		Statement statement = DBConn.createStatement();
-		ResultSet rs = statement.executeQuery("select count(*) from reviewers");
+		ResultSet rs = dal.getTotalReviewers();
 		int nextId = 0;
-		while(rs.next()) {
+		while (rs.next()) {
 			int maxId = rs.getInt(1);
 			nextId = ++maxId;
 		}
 		return nextId;
 	}
-	
-	public User checkLogin(String userName, String password) throws SQLException {
-		Connection DBConn = null;
-		DBConn = ConnectDB.getConnection(SQLServerIP,databaseName);
-		Statement statement = DBConn.createStatement();
-		ResultSet rs = statement.executeQuery("select user_id from user where user_name='"+ userName+"' and password = '"+password+"'");
-		boolean isValid = false;
+
+	public User checkLogin(String userName, String password)
+			throws SQLException {
+		ResultSet rs = dal.validateUser(userName, password);
 		User user = null;
-		while(rs.next()) {
-			int i = rs.getInt(1);
+		while (rs.next()) {
 			user = new User();
-			user.setUserId(i);
+			user.setUserId(rs.getInt(1));
 			user.setUserName(userName);
+			user.setEmail(rs.getString(2));
 		}
 		return user;
 	}
