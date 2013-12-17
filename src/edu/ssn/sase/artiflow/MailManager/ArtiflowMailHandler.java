@@ -12,17 +12,17 @@ import java.util.Set;
 public class ArtiflowMailHandler {
 	private Map<String, String> serverDetailsMap = new HashMap<String, String>();
 	
-	public void sendMailNow(List<String> mailIds, String projectName) {
+	public void sendMailNow(List<String> mailIds, String projectName, String configFilePath) {
 		try {
-			getMailServerParametersFromConfigFile();
+			getMailServerParametersFromConfigFile(configFilePath);
 			new NotifyActors(serverDetailsMap, mailIds, projectName).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void getMailServerParametersFromConfigFile() throws IOException {
-		File f = new File("c:/Mail.properties");
+	private void getMailServerParametersFromConfigFile(String configFilePath) throws IOException {
+		File f = new File(configFilePath);
 		System.out.println(f.getAbsolutePath());
 		FileInputStream fis = new FileInputStream(f);
 		Properties properties = new Properties();

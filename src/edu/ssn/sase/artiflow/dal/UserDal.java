@@ -10,7 +10,7 @@ import edu.ssn.sase.artiflow.utils.ConnectDB;
 public class UserDal {
 	Connection DBConn = null;
 	Statement statement = null;
-
+	
 	public void initiateParams(String SQLServerIP, String databaseName)
 			throws SQLException {
 		DBConn = ConnectDB.getConnection(SQLServerIP, databaseName);

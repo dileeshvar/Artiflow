@@ -160,6 +160,9 @@ public class InitiateReviewServlet extends HttpServlet {
 				review.setAuthor_id(currentUser.getUserId());
 				InitiateReviewHandler init = (InitiateReviewHandler) InitiateReviewFactory.getInitiateReviewHandler();
 				init.initiateReview(review, reviewMgr);
+				String resource = getServletContext().getRealPath("artiflowConfig");
+				String configPath = resource + "/Mail.properties";
+				init.sendNotification(review, reviewMgr, configPath);
 				request.setAttribute("Status", "Success");
 				request.getSession().setAttribute("Upload-File", null);
 				response.sendRedirect("InitiateReviewScreenServlet");

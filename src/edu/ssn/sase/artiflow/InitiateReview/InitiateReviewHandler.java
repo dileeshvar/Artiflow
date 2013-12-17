@@ -11,10 +11,9 @@ import edu.ssn.sase.artiflow.taskmanager.InitiateReviewInterface;
 public class InitiateReviewHandler implements InitiateReviewInterface{
 	public void initiateReview(Review review, ReviewManager mgr) throws SQLException {
 		mgr.updateReview(review);
-		sendNotification(review, mgr);
 	}
 
-	private void sendNotification(Review review, ReviewManager mgr) {
+	public void sendNotification(Review review, ReviewManager mgr, String configFilePath) {
 		ArtiflowMailHandler hdlr = new ArtiflowMailHandler();
 		List<String> mailIds = mgr.getUserMailIds(review);
 		String projectName = "";
@@ -23,6 +22,6 @@ public class InitiateReviewHandler implements InitiateReviewInterface{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		hdlr.sendMailNow(mailIds, projectName);
+		hdlr.sendMailNow(mailIds, projectName, configFilePath);
 	}
 }
