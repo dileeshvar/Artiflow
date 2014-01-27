@@ -5,9 +5,17 @@ import java.util.List;
 public class Artifact {
 	private int artifact_id;
 	private String artifact_name;
+	private String artifactFileName;
+	public String getArtifactFileName() {
+		return artifactFileName;
+	}
+	public void setArtifactFileName(String artifactFileName) {
+		this.artifactFileName = artifactFileName;
+	}
 	private int review_id;
 	private int project_id;
 	private ArtifactType artifact_type;
+	
 	private List<Comments> comments;
 	
 	public List<Comments> getComments() {

@@ -52,7 +52,7 @@ blockquote {
 
 blockquote p {
     margin:0; 
-    font-size:2em;
+    font-size:1.1em;
 }
 
 .follow {
@@ -653,13 +653,13 @@ blockquote p {
 	position:relative;
 	padding:15px 30px;
 	margin:0;
-	color:#000;
-	background:#f3961c; /* default background for browsers without gradient support */
+	color:#fff;
+	background:#2e88c4; /* default background for browsers without gradient support */
 	/* css3 */
-    background:-webkit-gradient(linear, 0 0, 0 100%, from(#f9d835), to(#f3961c));
-	background:-moz-linear-gradient(#f9d835, #f3961c);
-	background:-o-linear-gradient(#f9d835, #f3961c);
-	background:linear-gradient(#f9d835, #f3961c);
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#075698), to(#2e88c4));
+	background:-moz-linear-gradient(#075698, #2e88c4);
+	background:-o-linear-gradient(#075698, #2e88c4);
+	background:linear-gradient(#075698, #2e88c4);
 	/* Using longhand to avoid inconsistencies between Safari 4 and Chrome 4 */
 	-webkit-border-top-left-radius:25px 50px;
 	-webkit-border-top-right-radius:25px 50px;
@@ -680,7 +680,7 @@ blockquote p {
 	right:80px;
 	border-width:0 0 30px 50px;
 	border-style:solid;
-	border-color:transparent #f3961c;
+	border-color:transparent #2e88c4;
     /* reduce the damage in FF3.0 */
     display:block; 
     width:0;
@@ -700,6 +700,56 @@ blockquote p {
     width:0;
 }
 
+.example-obtuse-left {
+	position:relative;
+	padding:15px 30px;
+	margin:0;
+	color:#000;
+	background:#E6E6E6; /* default background for browsers without gradient support */
+	/* css3 */
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#A4A4A4), to(#E6E6E6));
+	background:-moz-linear-gradient(#A4A4A4, #E6E6E6);
+	background:-o-linear-gradient(#A4A4A4, #E6E6E6);
+	background:linear-gradient(#A4A4A4, #E6E6E6);
+	/* Using longhand to avoid inconsistencies between Safari 4 and Chrome 4 */
+	-webkit-border-top-left-radius:25px 50px;
+	-webkit-border-top-right-radius:25px 50px;
+	-webkit-border-bottom-right-radius:25px 50px;
+	-webkit-border-bottom-left-radius:25px 50px;
+	-moz-border-radius:25px / 50px;
+	border-radius:25px / 50px;
+}
+
+/* display of quote author (alternatively use a class on the element following the blockquote) */
+.example-obtuse-left + p {margin:10px 0 2em 50px; font-style:italic;}
+
+/* creates the larger triangle */
+.example-obtuse-left:before {
+	content:"";
+	position:absolute;
+	bottom:-30px;
+	left:80px;
+	border-width:0 50px 30px 0px;
+	border-style:solid;
+	border-color:transparent #E6E6E6;
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+}
+
+/* creates the smaller triangle */
+.example-obtuse-left:after {
+	content:"";
+	position:absolute;
+	bottom:-30px;
+	left:110px;
+	border-width:0 20px 30px 0px;
+	border-style:solid;
+	border-color:transparent #fff;
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+}
 
 /* ============================================================================================================================
 == TWITTER

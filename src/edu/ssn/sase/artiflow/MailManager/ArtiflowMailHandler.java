@@ -23,7 +23,6 @@ public class ArtiflowMailHandler {
 
 	private void getMailServerParametersFromConfigFile(String configFilePath) throws IOException {
 		File f = new File(configFilePath);
-		System.out.println(f.getAbsolutePath());
 		FileInputStream fis = new FileInputStream(f);
 		Properties properties = new Properties();
 		properties.load(fis);

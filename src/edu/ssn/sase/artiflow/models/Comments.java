@@ -5,7 +5,14 @@ public class Comments {
 	private String commentValue;
 	private int reviewId;
 	private int userId;
-	private int artifactVersionId;
+	private String userName;
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	private int artifactId;
 	public int getCommentsId() {
 		return commentsId;
 	}
@@ -30,10 +37,10 @@ public class Comments {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public int getArtifactVersionId() {
-		return artifactVersionId;
+	public int getArtifactId() {
+		return artifactId;
 	}
-	public void setArtifactVersionId(int artifactVersionId) {
-		this.artifactVersionId = artifactVersionId;
+	public void setArtifactId(int artifactId) {
+		this.artifactId = artifactId;
 	}
 }
