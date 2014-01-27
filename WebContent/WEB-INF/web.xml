@@ -38,7 +38,7 @@
     <description></description>
     <display-name>HandleReview</display-name>
     <servlet-name>HandleReview</servlet-name>
-    <servlet-class>edu.ssn.sase.artiflow.controller.HandleReview</servlet-class>
+    <servlet-class>edu.ssn.sase.artiflow.controller.HandleReviewServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>HandleReview</servlet-name>
@@ -53,5 +53,19 @@
   <servlet-mapping>
     <servlet-name>TimeLineCodeServlet</servlet-name>
     <url-pattern>/TimeLineCode</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ReviewManager</display-name>
+    <servlet-name>ReviewManager</servlet-name>
+    <servlet-class>edu.ssn.sase.artiflow.controller.ReviewManagerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReviewManager</servlet-name>
+    <url-pattern>/ReviewManagerReviewer</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>ReviewManager</servlet-name>
+    <url-pattern>/ReviewManagerAuthor</url-pattern>
   </servlet-mapping>
 </web-app>

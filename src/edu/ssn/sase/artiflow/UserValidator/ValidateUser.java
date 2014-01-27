@@ -7,7 +7,6 @@ import edu.ssn.sase.artiflow.models.User;
 
 public class ValidateUser implements ValidatorInterface{
 
-	@Override
 	public User performValidation(String userName, String password, UserManager mgr) {
 		User user = null;
 		try {

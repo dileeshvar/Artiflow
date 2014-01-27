@@ -157,7 +157,7 @@ public class ReviewManager {
 							+ " and artifact.artifact_id = " + artifactId);
 			while (rs.next()) {
 				Comments comment = new Comments();
-				comment.setArtifactVersionId(rs.getInt(5));
+				comment.setArtifactId(rs.getInt(5));
 				comment.setCommentsId(rs.getInt(1));
 				comment.setCommentValue(rs.getString(2));
 				comment.setReviewId(rs.getInt(3));
@@ -171,31 +171,24 @@ public class ReviewManager {
 		return comments;
 	}
 
-	public Review updateComments(int userId, String comment, boolean sigOff) {
-		Review review = getReview(userId);
+	public Review updateComments(int userId, String comment, boolean sigOff, int reviewId, int artifactId) {
 		Connection dbCon = null;
 		dbCon = ConnectDB.getConnection("localhost", "artiflow");
 		try {
 			PreparedStatement preparedStatement = dbCon
 					.prepareStatement("INSERT INTO comments (comments, review_id, user_id, artifact_id) VALUES (?,?,?,?)");
 			preparedStatement.setString(1, comment);
-			preparedStatement.setInt(2, review.getReview_id());
+			preparedStatement.setInt(2, reviewId);
 			preparedStatement.setInt(3, userId);
-			preparedStatement.setInt(4, review.getArtifacts().get(0)
-					.getArtifact_id());
+			preparedStatement.setInt(4, artifactId);
 			preparedStatement.execute();
 			if (sigOff)
-				updateReview(review.getReview_id());
-			review.getArtifacts()
-					.get(0)
-					.setComments(
-							getArtifactComments(review.getReview_id(), review
-									.getArtifacts().get(0).getArtifact_id()));
+				updateReview(reviewId);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return review;
+		return null;
 	}
 
 	private void updateReview(int reviewID) {
