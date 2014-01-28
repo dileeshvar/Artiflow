@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import edu.ssn.sase.artiflow.UserValidator.ValidateUser;
 import edu.ssn.sase.artiflow.UserValidator.ValidatorInterface;
+import edu.ssn.sase.artiflow.functions.ReviewManager;
 import edu.ssn.sase.artiflow.functions.UserManager;
 import edu.ssn.sase.artiflow.models.User;
 
@@ -43,17 +44,20 @@ public class LoginServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String password = request.getParameter("password");
 		UserManager userMgr = new UserManager("localhost", "artiflow");
-		User user = null;
+		ReviewManager reviewMgr = new ReviewManager("localhost", "artiflow");
+		User user = (User) session.getAttribute("User");
 		ValidatorInterface validator = new ValidateUser();
-		user = validator.performValidation(userName, password, userMgr);
-		
-		if(user != null) {
+		if(user == null) {
+			user = validator.performValidation(userName, password, userMgr);
 			session.setAttribute("User", user);
-			if(user.getUserId()==1){
-				response.sendRedirect("InitiateReviewScreenServlet");
-			}				
-			else if(user.getUserId()==2)
-				response.sendRedirect("HandleReview");
+		}
+		
+		// Check if user is valid
+		if(user != null) {
+			request.setAttribute("author", validator.getReviewInitiatedByUser(reviewMgr, user));
+			request.setAttribute("reviewer", validator.getReviewToBeReviewedByUser(reviewMgr, user));
+			RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+			rd.forward(request, response);
 		} else {
 			request.setAttribute("Flag", "Error");
 			RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");

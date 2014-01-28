@@ -6,7 +6,7 @@
 <H1> Artiflow - Review made Easy</H1>
 <div class="pure-menu pure-menu-open pure-menu-horizontal">
     <ul id="nav">
-        <li class= "pure-menu-selected"><a href="login.jsp">Home</a></li>
+        <li class= "pure-menu-selected"><a href="LoginServlet">Home</a></li>
         <li><a href="#">Author Section</a></li>
         <li><a href="#">Reviewer Section</a></li>
         <li><a href="#">Product Evolution</a></li>

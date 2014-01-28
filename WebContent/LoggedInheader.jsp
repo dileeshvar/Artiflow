@@ -17,7 +17,7 @@ $(document).ready(function(){
 </div>
 <div class="pure-menu pure-menu-open pure-menu-horizontal">
     <ul id="nav">
-        <li><a href="/Test_Artiflow">Home</a></li>
+        <li><a href="LoginServlet">Home</a></li>
         <li><a href="InitiateReviewScreenServlet">Author Section</a></li>
         <li><a href="HandleReview">Reviewer Section</a></li>
         <li><a href="TimeLineCode">Product Evolution</a></li>

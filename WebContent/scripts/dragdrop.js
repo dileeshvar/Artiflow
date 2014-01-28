@@ -4,6 +4,7 @@
 			.getElementById("file-list");
 
 	function uploadFile(file) {
+		document.getElementById("noItems").style.visibility = 'hidden';
 		$(".deleteFile").click(function() {
 			$(this).closest(".deletable").remove();
 		});
