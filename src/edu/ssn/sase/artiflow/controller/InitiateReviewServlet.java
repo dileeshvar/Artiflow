@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -154,8 +153,7 @@ public class InitiateReviewServlet extends HttpServlet {
 			}
 			if(!valid) {
 				request.setAttribute("Status", "Failure");
-				RequestDispatcher rd = request.getRequestDispatcher("InitiateReviewScreenServlet");
-				rd.forward(request, response);
+				response.sendRedirect("InitiateReviewScreenServlet");
 			} else {
 				review.setReviewers(reviewers);
 				review.setArtifacts(artifacts);
@@ -167,13 +165,11 @@ public class InitiateReviewServlet extends HttpServlet {
 				init.sendNotification(review, reviewMgr, configPath);
 				request.setAttribute("Status", "Success");
 				request.getSession().setAttribute("Upload-File", null);
-				RequestDispatcher rd = request.getRequestDispatcher("InitiateReviewScreenServlet");
-				rd.forward(request, response);
+				response.sendRedirect("InitiateReviewScreenServlet");
 			}
 		} catch (Exception e) {
 			request.setAttribute("Status", "Error");
-			RequestDispatcher rd = request.getRequestDispatcher("InitiateReviewScreenServlet");
-			rd.forward(request, response);
+			response.sendRedirect("InitiateReviewScreenServlet");
 		}
 	}
 }

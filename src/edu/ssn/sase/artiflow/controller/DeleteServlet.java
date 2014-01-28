@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -14,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-
-import edu.ssn.sase.artiflow.functions.ReviewManager;
 
 /**
  * Servlet implementation class DeleteServlet
@@ -46,18 +43,8 @@ public class DeleteServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		final Part file = request.getPart("File");
 		String fileName = getValue(file);
-
-		String reviewFolderName = "";
-		ReviewManager revMgr = new ReviewManager("localhost", "artiflow");
-		try {
-			int nextReviewId = revMgr.getReviewId();
-			reviewFolderName = "ReviewFolder" + nextReviewId;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		String resource = getServletContext().getRealPath(reviewFolderName);
-
-		File dir = new File(resource);
+		System.out.println(fileName);
+		File dir = new File("UploadedFiles");
 		for (File fileInFolder : dir.listFiles()) {
 			String dirFileName = fileInFolder.getName().split("_")[1];
 			if(dirFileName.equals(fileName)) {

@@ -58,7 +58,7 @@ public class InitiateReviewScreenServlet extends HttpServlet {
 
 			List<String> artiType = artiMgr.getArtifactType();
 			request.getSession().setAttribute("Artifact_Type", artiType);
-			request.setAttribute("Status", request.getAttribute("Status"));
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/initDialogForm.jsp");
 			rd.forward(request, response);
 		} catch (SQLException e) {
