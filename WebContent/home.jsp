@@ -14,10 +14,7 @@
 	<jsp:include page="LoggedInheader.jsp"></jsp:include>
 </div>
 <body class="pure-skin-mine">
-	<br>
-	<br>
-	<br>
-	<hr>
+<hr>
 	<div id="author">
 		<h1> Author Dashboard</h1>
 		<table border=1>
