@@ -135,7 +135,7 @@
 							style="font-size: 85%;">Hide Progress of upload</button>
 						<div id="UploadProgress">
 							<ul id="file-list">
-								<li class="no-items">(no files uploaded yet)</li>
+								<li id="noItems" class="no-items">(no files uploaded yet)</li>
 							</ul>
 						</div>
 						<script type="text/javascript" src="scripts/dragdrop.js"></script>

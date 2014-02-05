@@ -48,11 +48,7 @@ public class AuthenticationValidator implements Filter {
 		User user = (User) session.getAttribute("User");
 		String path = StringUtils.removeStart(req.getRequestURI(), req.getContextPath());
 		if(path.equals("/") || path.equals("/login.jsp") || path.equals("/LoginServlet")) {
-			if (user == null) {
-				chain.doFilter(request, response);
-			} else {
-				((HttpServletResponse) response).sendRedirect("InitiateReviewScreenServlet");
-			}
+			chain.doFilter(request, response);
 		} else if((!(path.startsWith("/style") || path.startsWith("/script")))) {
 			if (user == null) {
 				req.setAttribute("Flag", "Error");

@@ -48,6 +48,22 @@ public class ReviewDal {
 		ResultSet rs = statement.executeQuery();
 		return rs;
 	}
+	
+	public ResultSet getReviewsInitiatedByUser(int userId) throws SQLException {
+		statement = DBConn
+				.prepareStatement("select * from review where author_id=?");
+		statement.setInt(1, userId);
+		ResultSet rs = statement.executeQuery();
+		return rs;
+	}
+	
+	public ResultSet getReviewsToBeReviewedByUser(int userId) throws SQLException {
+		statement = DBConn.prepareStatement("select review.* from review"
+				+ " inner join reviewers on reviewers.review_id = review.review_id where reviewers.user_id = ?");
+		statement.setInt(1, userId);
+		ResultSet rs = statement.executeQuery();
+		return rs;
+	}
 
 	public ResultSet getReviewerIdFromReview(Review review) throws SQLException {
 		statement = DBConn
@@ -59,13 +75,14 @@ public class ReviewDal {
 
 	public int updateReview(Review review, Timestamp ts) throws SQLException {
 		statement = DBConn
-				.prepareStatement("insert into review (review_id,story_name,objective,project_id,author_id,date_created) values (?,?,?,?,?,?)");
+				.prepareStatement("insert into review (review_id,story_name,objective,project_id,author_id,date_created,status_id) values (?,?,?,?,?,?,?)");
 		statement.setInt(1, review.getReview_id());
 		statement.setString(2, review.getStoryName());
 		statement.setString(3, review.getObjective());
 		statement.setInt(4, review.getProject_id());
 		statement.setInt(5, 1);
 		statement.setTimestamp(6, ts);
+		statement.setInt(7, review.getStatus_id());
 		return statement.executeUpdate();
 	}
 

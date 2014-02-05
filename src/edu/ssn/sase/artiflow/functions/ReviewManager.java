@@ -113,7 +113,6 @@ public class ReviewManager {
 	}
 
 	private Artifact getArtifact(int reviewId) {
-		// TODO Auto-generated method stub
 		Artifact artifact = new Artifact();
 		ArrayList<Comments> comments = null;
 		Connection dbCon = null;
@@ -135,14 +134,12 @@ public class ReviewManager {
 				artifact.setComments(comments);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return artifact;
 	}
 
 	private ArrayList<Comments> getArtifactComments(int reviewId, int artifactId) {
-		// TODO Auto-generated method stub
 		ArrayList<Comments> comments = new ArrayList<Comments>();
 		Connection dbCon = null;
 		dbCon = ConnectDB.getConnection("localhost", "artiflow");
@@ -165,13 +162,13 @@ public class ReviewManager {
 				comments.add(comment);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return comments;
 	}
 
-	public Review updateComments(int userId, String comment, boolean sigOff, int reviewId, int artifactId) {
+	public Review updateComments(int userId, String comment, boolean sigOff,
+			int reviewId, int artifactId) {
 		Connection dbCon = null;
 		dbCon = ConnectDB.getConnection("localhost", "artiflow");
 		try {
@@ -185,7 +182,6 @@ public class ReviewManager {
 			if (sigOff)
 				updateReview(reviewId);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -205,13 +201,11 @@ public class ReviewManager {
 			int i = preparedStatement.executeUpdate();
 			System.out.println(i);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	private Reviewer getReviewerData(int userId) {
-		// TODO Auto-generated method stub
 		Reviewer reviewer = new Reviewer();
 		Connection dbCon = null;
 		dbCon = ConnectDB.getConnection("localhost", "artiflow");
@@ -280,5 +274,34 @@ public class ReviewManager {
 			projName = rs.getString(2);
 		}
 		return projName;
+	}
+
+	public List<Review> getReviewInitiatedByUser(int userId)
+			throws SQLException {
+		ResultSet rs = dal.getReviewsInitiatedByUser(userId);
+		List<Review> authoredReviewList = new ArrayList<Review>();
+		while (rs.next()) {
+			Review review = new Review();
+			review.setReview_id(rs.getInt(1));
+			review.setStoryName(rs.getString(2));
+			review.setObjective(rs.getString(3));
+			review.setStatus_id(rs.getInt(6));
+			authoredReviewList.add(review);
+		}
+		return authoredReviewList;
+	}
+
+	public List<Review> getReviewToBeReviewedByUser(int userId) throws SQLException {
+		ResultSet rs = dal.getReviewsToBeReviewedByUser(userId);
+		List<Review> toBeReviewedList = new ArrayList<Review>();
+		while (rs.next()) {
+			Review review = new Review();
+			review.setReview_id(rs.getInt(1));
+			review.setStoryName(rs.getString(2));
+			review.setObjective(rs.getString(3));
+			review.setStatus_id(rs.getInt(6));
+			toBeReviewedList.add(review);
+		}
+		return toBeReviewedList;
 	}
 }
