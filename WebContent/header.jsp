@@ -18,6 +18,7 @@
 			<ul class="sub-menu">
 				<li class="sub-menu-list"><a href="TimeLineCode">Code Perspective</a></li>
 				<li class="sub-menu-list"><a href="TimeLineCode">User Perspective</a></li>
+				<li class="sub-menu-list"><a href="TimeLineCode">Dynamic Perspective</a></li>
 			</ul></li>
 	</ul>
 </div>
