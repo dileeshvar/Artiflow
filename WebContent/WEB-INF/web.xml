@@ -64,8 +64,38 @@
     <servlet-name>ReviewManager</servlet-name>
     <url-pattern>/ReviewManagerReviewer</url-pattern>
   </servlet-mapping>
-    <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>ReviewManager</servlet-name>
     <url-pattern>/ReviewManagerAuthor</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LineBarServlet</display-name>
+    <servlet-name>LineBarServlet</servlet-name>
+    <servlet-class>edu.ssn.sase.artiflow.controller.LineBarServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LineBarServlet</servlet-name>
+    <url-pattern>/LineBarServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CumulativeLineServlet</display-name>
+    <servlet-name>CumulativeLineServlet</servlet-name>
+    <servlet-class>edu.ssn.sase.artiflow.controller.CumulativeLineServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CumulativeLineServlet</servlet-name>
+    <url-pattern>/CumulativeLineServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>stackedAreaServlet</display-name>
+    <servlet-name>stackedAreaServlet</servlet-name>
+    <servlet-class>edu.ssn.sase.artiflow.controller.stackedAreaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>stackedAreaServlet</servlet-name>
+    <url-pattern>/stackedAreaServlet</url-pattern>
   </servlet-mapping>
 </web-app>
