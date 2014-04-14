@@ -11,6 +11,7 @@
 	media="screen">
 <link rel="stylesheet" type="text/css" href="style/cssfonts-min.css">
 <script src="scripts/jquery-2.0.3.min.js"></script>
+<script src="scripts/initiatereview.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#UploadProgress").ready(function() {
@@ -92,18 +93,18 @@
 				<label for="reviewers">Reviewers Name</label> <select
 					name="mainReviewers" multiple="multiple" required
 					class="pure-input-1-4">
-					<option value="" selected="selected">None</option>
+					<option value="" selected="selected" onclick="disableInOther()">None</option>
 					<c:forEach var="test" items="${Reviewers}">
-						<option>${test}</option>
+						<option class="list_reviewers" onclick="disableInOther()">${test}</option>
 					</c:forEach>
 				</select>
 			</div>
 			<div class="pure-control-group">
 				<label for="optionalReviewers">Optional Reviewers Name</label> <select
 					name="optReviewers" multiple="multiple" class="pure-input-1-4">
-					<option value="" selected="selected">None</option>
+					<option value="" selected="selected" onclick="disableInOther()">None</option>
 					<c:forEach var="test" items="${Reviewers}">
-						<option>${test}</option>
+						<option class="list_optReviewers" onclick="disableInOther()">${test}</option>
 					</c:forEach>
 				</select>
 			</div>

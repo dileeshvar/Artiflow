@@ -59,7 +59,7 @@ public class UploadServlet extends HttpServlet {
 		InputStream input = filePart.getInputStream();
 		BufferedInputStream bis = new BufferedInputStream(input, 4096);
 		String resource = getServletContext().getRealPath("UploadedFiles");
-		System.out.println(getServletContext().getContextPath());
+		session.setAttribute("UploadFilePath", resource);
 		File dir = new File(resource);
 		if (!dir.exists())
 			dir.mkdir();

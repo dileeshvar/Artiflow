@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import edu.ssn.sase.artiflow.dal.ArtifactDal;
+import edu.ssn.sase.artiflow.models.Artifact;
 import edu.ssn.sase.artiflow.models.ArtifactType;
 
 public class ArtifactManager {
@@ -38,5 +39,26 @@ public class ArtifactManager {
 			artType.setArtifactTypeId(artTypeId);
 		}
 		return artType;
+	}
+	
+	public Artifact getArtifact(int artiId) {
+		return dal.getArtifact(artiId);
+	}
+
+	public void uploadNewArtifact(Artifact newArtifact) {
+		try {
+			dal.uploadArtifact(newArtifact);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateOldArtifact(Artifact oldArtifact) {
+		try {
+			dal.updateArtifact(oldArtifact);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

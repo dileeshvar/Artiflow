@@ -21,7 +21,7 @@ $(document).ready(function(){
 		<li class="menu-list"><a href="#">Author Section</a>
 			<ul class="sub-menu">
 				<li class="sub-menu-list"><a href="InitiateReviewScreenServlet">Initiate Review</a></li>
-				<li class="sub-menu-list"><a href="ReviewManagerAuthor">Initiate Review Dashboard</a></li>
+				<li class="sub-menu-list"><a href="ReviewManagerAuthor">Author Dashboard</a></li>
 			</ul></li>
 		<li class="menu-list"><a href="#">Reviewer Section</a>
 			<ul class="sub-menu">

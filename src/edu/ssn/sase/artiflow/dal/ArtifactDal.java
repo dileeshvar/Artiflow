@@ -2,10 +2,13 @@ package edu.ssn.sase.artiflow.dal;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import edu.ssn.sase.artiflow.models.Artifact;
 import edu.ssn.sase.artiflow.models.ArtifactType;
@@ -176,5 +179,79 @@ public class ArtifactDal {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public Artifact getArtifact(int artiId){
+		Artifact arti = new Artifact();
+		ResultSet rs;
+		try {
+			rs = statement
+					.executeQuery("select * from artifact where artifact_id="
+							+ artiId);
+			while (rs.next()) {
+				arti.setArtifact_id(artiId);
+				arti.setArtifact_name(rs.getString(2));
+				ArtifactType type = new ArtifactType();
+				type.setArtifactTypeId(rs.getInt(5));
+				arti.setArtifact_type(type);
+				arti.setReview_id(rs.getInt(3));
+				arti.setProject_id(rs.getInt(4));
+				arti.setCurrent(rs.getBoolean(9));
+				arti.setArtifact_map_id(rs.getString(8));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return arti;
+	}
+
+	public int uploadArtifact(Artifact arti) throws SQLException {
+		long timeNow = Calendar.getInstance().getTimeInMillis();
+		Timestamp ts = new Timestamp(timeNow);
+		int artifactExecute = 0;
+		PreparedStatement statement = DBConn
+				.prepareStatement("insert into artifact (artifact_name,review_id,Project_id,artifact_type_id, date_created, artifact_map_id, is_current) values (?,?,?,?,?,?,?)");
+		statement.setString(1, arti.getArtifact_name());
+		statement.setInt(2, arti.getReview_id());
+		statement.setInt(3, arti.getProject_id());
+		statement.setInt(4, arti.getArtifact_type().getArtifactTypeId());
+		statement.setTimestamp(5, ts);
+		statement.setInt(6,Integer.valueOf(arti.getArtifact_map_id()));
+		statement.setBoolean(7, true);
+		artifactExecute =  statement.executeUpdate();
+		insertArtifactVersion(arti.getArtifact_id());		
+		return artifactExecute;
+	}
+	
+	public int updateArtifact(Artifact arti) throws SQLException {
+		int artifactExecute = 0;
+		PreparedStatement statement = DBConn.prepareStatement("UPDATE artifact SET is_current=0 WHERE artifact_id=?");
+		statement.setInt(1, arti.getArtifact_id());
+		artifactExecute =  statement.executeUpdate();
+		return artifactExecute;
+	}
+
+	private int insertArtifactVersion(int artifact_id) throws SQLException {
+		int versionNo = getArtifactVersion(artifact_id);
+		PreparedStatement statement = DBConn
+				.prepareStatement("insert into artifact_version (artifact_id,version_no) values (?,?)");
+		statement.setInt(1, artifact_id);
+		statement.setInt(2, versionNo + 1);
+		return statement.executeUpdate();		
+	}
+
+	public int getArtifactVersion(int artifactId) throws SQLException {
+		PreparedStatement statement = DBConn.prepareStatement("select count(*) from artifact_version where artifact_id = ?");
+		statement.setInt(1, artifactId);
+		ResultSet rs = statement.executeQuery();
+		while(rs.next()) {
+			int count = rs.getInt(1);
+			if(count == 0) {
+				return 1;
+			} else {
+				return count;
+			}
+		}
+		return 0;
 	}
 }
