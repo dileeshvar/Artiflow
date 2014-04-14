@@ -183,9 +183,10 @@ text {
 			</ul></li>
 		<li class="menu-list"><a href="#">Product Evolution</a>
 			<ul class="sub-menu">
-				<li class="sub-menu-list"><a href="TimeLineCode">Code Perspective</a></li>
-				<li class="sub-menu-list"><a href="TimeLineCode">User Perspective</a></li>
-				<li class="sub-menu-list"><a href="TimeLineCode">Dynamic Perspective</a></li>
+				<li class="sub-menu-list"><a href="TimeLineCode">Timeline Perspective</a></li>
+				<li class="sub-menu-list"><a href="LineBarServlet">Line-Plus Bar Chart</a></li>
+				<li class="sub-menu-list"><a href="CumulativeLineServlet">Cumulative Line Chart</a></li>
+				<li class="sub-menu-list"><a href="stackedAreaServlet">Stacked Area Chart</a></li>
 			</ul></li>
 	</ul>
     </div>
