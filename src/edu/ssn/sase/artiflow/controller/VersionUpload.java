@@ -54,8 +54,8 @@ public class VersionUpload extends HttpServlet {
 		newArtifact.setCurrent(true);
 		newArtifact.setProject_id(oldArtifact.getProject_id());
 		newArtifact.setReview_id(oldArtifact.getReview_id());
-		mgr.uploadNewArtifact(newArtifact);
 		mgr.updateOldArtifact(oldArtifact);
+		mgr.uploadNewArtifact(newArtifact);
 		session.setAttribute("Upload-File", null);
 		session.setAttribute("artifactId" , null);
 		RequestDispatcher rd = request.getRequestDispatcher("/LoginServlet");

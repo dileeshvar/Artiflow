@@ -80,7 +80,7 @@ public class ReviewDal {
 		statement.setString(2, review.getStoryName());
 		statement.setString(3, review.getObjective());
 		statement.setInt(4, review.getProject_id());
-		statement.setInt(5, 1);
+		statement.setInt(5, review.getAuthor_id());
 		statement.setTimestamp(6, ts);
 		statement.setInt(7, review.getStatus_id());
 		return statement.executeUpdate();

@@ -219,38 +219,51 @@ public class ArtifactDal {
 		statement.setInt(6,Integer.valueOf(arti.getArtifact_map_id()));
 		statement.setBoolean(7, true);
 		artifactExecute =  statement.executeUpdate();
-		insertArtifactVersion(arti.getArtifact_id());		
+		insertArtifactVersion(arti.getArtifact_id(), arti.getArtifact_map_id());		
+		updateReviewStatus(arti.getReview_id());
 		return artifactExecute;
 	}
 	
+	private void updateReviewStatus(int reviewID) {
+		Connection dbCon = null;
+		dbCon = ConnectDB.getConnection("localhost", "artiflow");
+		try {
+			System.out.println(reviewID);
+			PreparedStatement preparedStatement = dbCon
+					.prepareStatement("update review set status_id = ? where review_id = ?");
+			preparedStatement.setInt(1,2);
+			preparedStatement.setInt(2, reviewID);
+			int i = preparedStatement.executeUpdate();
+			System.out.println(i);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public int updateArtifact(Artifact arti) throws SQLException {
 		int artifactExecute = 0;
-		PreparedStatement statement = DBConn.prepareStatement("UPDATE artifact SET is_current=0 WHERE artifact_id=?");
+		PreparedStatement statement = DBConn.prepareStatement("UPDATE artifact SET is_current=0 WHERE artifact_map_id=?");
 		statement.setInt(1, arti.getArtifact_id());
 		artifactExecute =  statement.executeUpdate();
 		return artifactExecute;
 	}
 
-	private int insertArtifactVersion(int artifact_id) throws SQLException {
-		int versionNo = getArtifactVersion(artifact_id);
+	private int insertArtifactVersion(int artifact_id, String artiMapId) throws SQLException {
+		int versionNo = getArtifactVersion(Integer.valueOf(artiMapId));
 		PreparedStatement statement = DBConn
 				.prepareStatement("insert into artifact_version (artifact_id,version_no) values (?,?)");
 		statement.setInt(1, artifact_id);
-		statement.setInt(2, versionNo + 1);
+		statement.setInt(2, versionNo);
 		return statement.executeUpdate();		
 	}
 
 	public int getArtifactVersion(int artifactId) throws SQLException {
-		PreparedStatement statement = DBConn.prepareStatement("select count(*) from artifact_version where artifact_id = ?");
+		PreparedStatement statement = DBConn.prepareStatement("select count(*) from artifact where artifact_map_id = ?");
 		statement.setInt(1, artifactId);
 		ResultSet rs = statement.executeQuery();
 		while(rs.next()) {
 			int count = rs.getInt(1);
-			if(count == 0) {
-				return 1;
-			} else {
-				return count;
-			}
+			return count;
 		}
 		return 0;
 	}

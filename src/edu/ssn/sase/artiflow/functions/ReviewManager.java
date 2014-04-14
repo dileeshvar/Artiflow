@@ -179,6 +179,7 @@ public class ReviewManager {
 			preparedStatement.setInt(3, userId);
 			preparedStatement.setInt(4, artifactId);
 			preparedStatement.execute();
+			updateReviewStatus(reviewId);
 			if (sigOff) {
 				updateArtifact(artifactId, reviewId);
 				if(checkForReviewClose(reviewId)) {
@@ -250,7 +251,7 @@ public class ReviewManager {
 		try {
 			System.out.println(reviewID);
 			PreparedStatement preparedStatement = dbCon
-					.prepareStatement("update review set end_date = ? where review_id = ?");
+					.prepareStatement("update review set end_date = ?, status_id = 3 where review_id = ?");
 			preparedStatement.setTimestamp(1,
 					new Timestamp(System.currentTimeMillis()));
 			System.out.println(new Timestamp(System.currentTimeMillis()));
@@ -262,6 +263,22 @@ public class ReviewManager {
 		}
 	}
 
+	private void updateReviewStatus(int reviewID) {
+		Connection dbCon = null;
+		dbCon = ConnectDB.getConnection("localhost", "artiflow");
+		try {
+			System.out.println(reviewID);
+			PreparedStatement preparedStatement = dbCon
+					.prepareStatement("update review set status_id = ? where review_id = ?");
+			preparedStatement.setInt(1,2);
+			preparedStatement.setInt(2, reviewID);
+			int i = preparedStatement.executeUpdate();
+			System.out.println(i);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private Reviewer getReviewerData(int userId) {
 		Reviewer reviewer = new Reviewer();
 		Connection dbCon = null;
