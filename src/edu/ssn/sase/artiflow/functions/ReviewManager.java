@@ -179,15 +179,72 @@ public class ReviewManager {
 			preparedStatement.setInt(3, userId);
 			preparedStatement.setInt(4, artifactId);
 			preparedStatement.execute();
-			if (sigOff)
-				updateReview(reviewId);
+			if (sigOff) {
+				updateArtifact(artifactId, reviewId);
+				if(checkForReviewClose(reviewId)) {
+					closeReview(reviewId);
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
+	private boolean checkForReviewClose(int reviewId) throws SQLException {
+		Connection dbCon = ConnectDB.getConnection("localhost", "artiflow");
+		Statement statement = dbCon.createStatement();
+		ResultSet rs = statement.executeQuery("SELECT date_last_modified FROM artifact where review_id = "+ reviewId 
+				+" and is_current = 1");
+		boolean check = false;
+		while(rs.next()) {
+			Object o = rs.getObject(1);
+			if(null != o) {
+				check = true;
+			} else {
+				check = false;
+				break;
+			}
+		}
+		return check;
+	}
+
+	private void updateArtifact(int artifactId, int reviewId) {
+		Connection dbCon = null;
+		dbCon = ConnectDB.getConnection("localhost", "artiflow");
+		try {
+			PreparedStatement preparedStatement = dbCon
+					.prepareStatement("update artifact set date_last_modified = ? where artifact_id = ?");
+			preparedStatement.setTimestamp(1,
+					new Timestamp(System.currentTimeMillis()));
+			preparedStatement.setInt(2, artifactId);
+			int i = preparedStatement.executeUpdate();
+			System.out.println(i);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		updateReview(reviewId);
+	}
+
 	private void updateReview(int reviewID) {
+		Connection dbCon = null;
+		dbCon = ConnectDB.getConnection("localhost", "artiflow");
+		try {
+			System.out.println(reviewID);
+			PreparedStatement preparedStatement = dbCon
+					.prepareStatement("update review set date_last_modified = ? where review_id = ?");
+			preparedStatement.setTimestamp(1,
+					new Timestamp(System.currentTimeMillis()));
+			System.out.println(new Timestamp(System.currentTimeMillis()));
+			preparedStatement.setInt(2, reviewID);
+			int i = preparedStatement.executeUpdate();
+			System.out.println(i);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void closeReview(int reviewID) {
 		Connection dbCon = null;
 		dbCon = ConnectDB.getConnection("localhost", "artiflow");
 		try {

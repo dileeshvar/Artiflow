@@ -2,30 +2,22 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+    pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="style/bubble.css">
-<link rel="stylesheet" href="style/pure_style.css">
-<link rel="stylesheet" type="text/css" href="style/cssfonts-min.css">
-<link rel="stylesheet" type="text/css"
-	href="scripts/google-code-prettify/prettify.css">
-<link rel="stylesheet" href="style/dragdrop.css" type="text/css"
-	media="screen">
-<style>
-#drop-area {
-	width: 350px;
-}
-</style>
-<script
-	src="scripts/google-code-prettify/run_prettify.js?autoload=true&amp;skin=default&amp;lang=css"
-	defer="defer"></script>
-<script src="scripts/jquery-2.0.3.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<link rel="stylesheet" type="text/css" href="style/bubble.css">
+		<link rel="stylesheet" href="style/pure_style.css">
+		<link rel="stylesheet" type="text/css" href="style/cssfonts-min.css">
+		<link rel="stylesheet" type="text/css" href="scripts/google-code-prettify/prettify.css">
+		<link rel="stylesheet" href="style/dragdrop.css" type="text/css" media="screen">
+		<script src="scripts/google-code-prettify/run_prettify.js?autoload=true&amp;skin=default&amp;lang=css" defer="defer"></script>
+		<script src="scripts/jquery-2.0.3.min.js"></script>
+		<script src="scripts/deleteFile.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function() {
 		$("#UploadProgress").ready(function() {
 			$("#UploadProgress").hide();
 			$("#HideProgress").attr("disabled", true);
@@ -42,7 +34,7 @@
 		});
 	});
 </script>
-<script src="scripts/deleteFile.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(
 			function() {
@@ -72,8 +64,7 @@
 		<select id="docVersion">
 			<option selected="selected">Select Version</option>
 			<c:forEach items="${artifactVersion}" varStatus="loop">
-				<option
-					value="<c:out value="${artifacts[loop.index].artifact_name}"/>"><c:out
+				<option value="<c:out value="${artifacts[loop.index].artifact_name}"/>"><c:out
 						value="${artifactVersion[loop.index].versionNo}" /></option>
 			</c:forEach>
 		</select>
@@ -86,20 +77,12 @@
 							.getAttribute("artifacts");
 					if (artifact.get(0).getArtifact_type().getArtifactTypeId() == 1) {
 				%>
-				<a href="/downloadFile"> <%
- 	artifact.get(0).getArtifact_name();
- %>
-				</a>
 				<pre class="prettyprint" id="code">
 				</pre>
 				<%
 					}
 					if (artifact.get(0).getArtifact_type().getArtifactTypeId() != 1) {
 				%>
-				<a href="/downloadFile"> <%
- 	artifact.get(0).getArtifact_name();
- %>
-				</a>
 				<c:if test="${not empty artifacts[0].artifact_name}">
 					<iframe id="myFrame" width="100%" height="100%"
 						style="border: 1px solid Black;"
@@ -152,7 +135,7 @@
 								boolean isAuthor = (Boolean) request.getAttribute("isAuthor");
 								if (!isAuthor) {
 							%>
-							<input type="checkbox" value="Sign-off" name="jj" id="jj" /> <label>Sign-off</label>
+							<input type="checkbox" value="Sign-off" name="Sign-off" id="jj" /> <label>Sign-off</label>
 							<%
 								}
 							%>
