@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.TimeZone;
 
 import javax.xml.bind.JAXBContext;
@@ -39,13 +40,13 @@ public class TimeLineXMLBuilder {
 		this.comments = comments;
 	}
 
-	public String buildTimelineXML(File file, String URL){
+	public String buildTimelineXML(File file, String URL, ArrayList<Integer> artifactKey){
 		String xmlPath = "";
 		JAXBContext jc = null;
 		try {
 			jc = JAXBContext.newInstance(Data.class);
 			javax.xml.bind.Marshaller marshaller = jc.createMarshaller();
-			Data data = codePerspectiveData(URL);
+			Data data = codePerspectiveData(URL, artifactKey);
 			marshaller.marshal(data, file);
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
@@ -54,21 +55,49 @@ public class TimeLineXMLBuilder {
 		return xmlPath;
 	}
 	
-	private Data codePerspectiveData(String URL){
+	public LinkedHashMap<Integer, String> getArtifactTypes(){
+		LinkedHashMap<Integer, String> artifactTypes =  new LinkedHashMap<Integer, String>();
+		java.sql.Connection dbcon = null;
+		dbcon = ConnectDB.getConnection("localhost", "artiflow");
+		java.sql.Statement s = null;
+		try {
+			s = dbcon.createStatement();
+			String query = "SELECT * FROM artifact_type;";
+			ResultSet resultSet = s.executeQuery(query);
+			while(resultSet.next()){
+				artifactTypes.put(resultSet.getInt(1), resultSet.getString(2));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return artifactTypes;
+	}
+	
+	private Data codePerspectiveData(String URL, ArrayList<Integer> artifactKey){
 		java.sql.Connection dbcon = null;
 		dbcon = ConnectDB.getConnection("localhost", "artiflow");
 		java.sql.Statement s = null;
 		Data data = null;
+		String key = "";
+		for (int i = 0; i < artifactKey.size(); i++) {
+			if(i==artifactKey.size()-1)
+				key+=artifactKey.get(i);
+			else
+				key+=artifactKey.get(i)+", ";
+		}
+		String subq = null;
+		if(key.length()>0)
+			subq = " and artifact.artifact_type_id in ("+key+")";
 		try {
 			s = dbcon.createStatement();
-//			String query = "select review.review_id, review.story_name, review.objective, review.date_created, "
-//					+ "review.end_date, artifact.artifact_id, artifact.artifact_name from review left outer "
-//					+ "join artifact on artifact.review_id = review.review_id where review.end_date is not null";
 			String query1 = "select review.review_id, review.story_name, review.objective, review.date_created, "
 					+ "(select max(r.end_date) from review r where r.story_name = review.story_name) as end_date, "
 					+ "artifact.artifact_id , artifact.artifact_name from review"
 					+ " left outer join artifact on artifact.review_id = review.review_id "
-					+ "where review.end_date is not null;";
+					+ "where review.end_date is not null";
+			if(subq!=null)
+				query1+=subq;
 			ResultSet resultSet = s.executeQuery(query1);
 			data = buildData(resultSet, URL);
 		} catch (SQLException e) {

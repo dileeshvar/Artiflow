@@ -2,6 +2,7 @@ package edu.ssn.sase.artiflow.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 import javax.servlet.ServletException;
@@ -28,7 +29,9 @@ public class TimeLineCodeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(request, response);
+		if(!handleParamRequest(request,response)){
+			doPost(request, response);
+		}
 	}
 
 	/**
@@ -36,14 +39,18 @@ public class TimeLineCodeServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		if(!handleParamRequest(request,response)){
 			TimeLineXMLBuilder xmlBuilder = new TimeLineXMLBuilder();
 			String resource = getServletContext().getRealPath("TimelineXMLSource");
 			File codeXML = new File(resource+"/EventCode.xml");
-			xmlBuilder.buildTimelineXML(codeXML, request.getRequestURL().toString());
+			String[] results = request.getParameterValues("type");
+			ArrayList<Integer> artifactKey = new ArrayList<Integer>();
+			for (int i = 0;results !=null && i < results.length; i++) {
+			    artifactKey.add(Integer.parseInt(results[i]));
+			}
+			xmlBuilder.buildTimelineXML(codeXML, request.getRequestURL().toString(), artifactKey);
 			request.setAttribute("codeXMLPath", codeXML.getAbsolutePath());
+			request.setAttribute("artifactType", xmlBuilder.getArtifactTypes());
 			request.getRequestDispatcher("/timeLine.jsp").forward(request, response);
-		}
 	}
 
 	private boolean handleParamRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

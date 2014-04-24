@@ -30,9 +30,9 @@ public class LineBarServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		try {
 			ChartDataBuilder jSONBuilder = new ChartDataBuilder("localhost", "artiflow");
-			request.setAttribute("testData",jSONBuilder.LineBarChartJson(1, 1));
+			request.setAttribute("testData",jSONBuilder.LineBarChartJson(1, 2));
 			request.setAttribute("lValue", 1);
-			request.setAttribute("rValue", 1);
+			request.setAttribute("rValue", 2);
 			request.getRequestDispatcher("/linePlusBarWithFocusChart.jsp").forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

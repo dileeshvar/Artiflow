@@ -29,7 +29,7 @@ public class stackedAreaServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		try {
 			ChartDataBuilder jSONBuilder = new ChartDataBuilder("localhost", "artiflow");
-			request.setAttribute("testData",jSONBuilder.stackedAreaChartJson(1));
+			request.setAttribute("testData",jSONBuilder.stackedAreaChartJson(1, null, null));
 			request.setAttribute("yValue", 1);
 			request.getRequestDispatcher("/stackedAreaChart.jsp").forward(request, response);
 		} catch (SQLException e) {
@@ -46,7 +46,7 @@ public class stackedAreaServlet extends HttpServlet {
 		try {
 			int yValue = Integer.parseInt(request.getParameter("left"));
 			ChartDataBuilder jSONBuilder = new ChartDataBuilder("localhost", "artiflow");
-			request.setAttribute("testData",jSONBuilder.stackedAreaChartJson(yValue));
+			request.setAttribute("testData",jSONBuilder.stackedAreaChartJson(yValue, null, null));
 			request.setAttribute("yValue", yValue);
 			request.getRequestDispatcher("/stackedAreaChart.jsp").forward(request, response);
 		} catch (SQLException e) {

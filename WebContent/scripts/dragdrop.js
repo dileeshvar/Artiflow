@@ -5,9 +5,6 @@
 
 	function uploadFile(file) {
 		document.getElementById("noItems").style.visibility = 'hidden';
-		$(".deleteFile").click(function() {
-			$(this).closest(".deletable").remove();
-		});
 		var li = document.createElement("li"), div = document
 				.createElement("div"), img, progressBarContainer = document
 				.createElement("div"), progressBar = document

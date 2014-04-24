@@ -2,7 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<<html>
+<html>
 <head>
 <meta charset=utf-8">
 <title>Artiflow - Line Plus Bar Chart</title>
@@ -28,6 +28,11 @@ var rval = ${rValue};
 $(document).ready(function() {
     $("#left")[0].selectedIndex = lval-1;
     $("#right")[0].selectedIndex = rval-1;
+    if( $("#left")[0].selectedIndex==  $("#right")[0].selectedIndex){
+    	alert("Both Left and Right axis options cannot be same");
+    	top.location="/Test_Artiflow/LineBarServlet";
+    }
+
 });
 
 var testdata = ${testData}.map(function(series) {
@@ -124,8 +129,8 @@ text {
 
 			<label for="right">Right Axis Options</label>
 			<select  name="right" id="right">
-			  <option value="1">No. of Comments per User Story</option>
-			  <option value="2">No. of Reviews per User Story</option>
+			  <option value="1">No. of Reviews per User Story</option>
+			  <option value="2">No. of Comments per User Story</option>
 			  <option value="3">Time Duration for completion of user Story</option>
 			  <option value="4">No. of versions Per User Story</option>
 			  <option value="5">No. Of Artifacts per user Story</option>

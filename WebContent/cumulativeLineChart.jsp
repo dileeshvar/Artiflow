@@ -2,7 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<<html>
+<html>
 <head>
 <link href="scripts/NVD3/src/nv.d3.css" rel="stylesheet" type="text/css">
 <meta charset=utf-8">
@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="style/dropdown.css">
 <link rel="stylesheet" href="style/pure_style.css">
 <link rel="stylesheet" type="text/css" href="style/cssfonts-min.css">
+<link rel="stylesheet" href="style/jquery-ui.css">
 <script src="scripts/NVD3/lib/d3.v3.js"></script>
 <script src="scripts/NVD3/lib/nv.d3.js"></script>
 <script src="scripts/NVD3/src/tooltip.js"></script>
@@ -21,8 +22,13 @@
 <script src="scripts/NVD3/src/models/line.js"></script>
 <script src="scripts/NVD3/src/models/cumulativeLineChart.js"></script>
 <script src="scripts/jquery-2.0.3.min.js"></script>
+<script src="scripts/jquery-ui.js"></script>
 <script>
 var yval = ${yValue};
+$(function() {
+	$( "#datepicker1" ).datepicker();
+	$( "#datepicker2" ).datepicker();
+	});
 $(document).ready(function() {
     $("#left")[0].selectedIndex = yval-1;
 });
@@ -116,6 +122,8 @@ text {
 			  <option value="2">No. of Comments per User Story</option>
 			  <option value="3">No. of versions Per User Story</option>
 			</select>
+			<p>Start Date: <input type="text" name = "start" id="datepicker1"></p>
+			<p>End Date: <input type="text" name = "end" id="datepicker2"></p>
 			<button type="submit" class="pure-button pure-button-primary">Submit</button>
 			</fieldset>
 			</form>
