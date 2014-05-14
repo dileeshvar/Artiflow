@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -49,9 +51,18 @@
 	<jsp:include page="LoggedInheader.jsp"></jsp:include>
 </div>
 <hr>
-<br><br>
+<br>
 <body class="pure-skin-mine" onload="onLoad();" onresize="onResize();">
-	<H2>TimeLine View - User Story - Code Perspective</H2>
+	<H2>TimeLine View</H2>
+	<form class="pure-form" action="TimeLineCode" method="post">
+	<fieldset>
+			<label for="left">Select Perspective Options :</label><br>
+			<c:forEach items="${artifactType}" var="artifactType">
+			<input type="checkbox" value="<c:out value="${artifactType.key}"/>" name="type" id="<c:out value="${artifactType.key}"/>" /> <label><c:out value="${artifactType.value}"/></label>
+</c:forEach>
+			<button type="submit" class="pure-button pure-button-primary">Submit</button>
+			</fieldset>
+			</form>
 	<div id="my-timeline" style="height: 350px; border: 1px solid #aaa"></div>
 	<noscript>This page uses Javascript to show you a Timeline.
 		Please enable Javascript in your browser to see the full page. Thank

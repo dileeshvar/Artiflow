@@ -8,19 +8,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style/bubble.css">
 <link rel="stylesheet" type="text/css" href="style/style.css">
+<link rel="stylesheet" href="style/pure_style.css">
 <title><c:out value="${artifactName} Review Comments"/></title>
 </head>
 <div class="header">
 <jsp:include page="LoggedInheader.jsp"></jsp:include>
 </div>
 
-<body>
+<body class="pure-skin-mine">
 <table width = "70%">
 <col width="30%">
   <col width="70%">
 <tr>
   <th></th>
-  <th>Comments</th>
+  <th>Comments - <c:out value="${artifactName}"/></th>
   </tr>
   <c:forEach items="${users}" varStatus="loop">
   <tr>

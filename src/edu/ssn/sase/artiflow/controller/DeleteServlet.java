@@ -55,8 +55,10 @@ public class DeleteServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		String resource = getServletContext().getRealPath(reviewFolderName);
-
+		String resource = getServletContext().getRealPath("UploadedFiles");
+		request.setAttribute("UploadFilePath", resource);
+		
+		resource = resource + "/" + reviewFolderName;
 		File dir = new File(resource);
 		for (File fileInFolder : dir.listFiles()) {
 			String dirFileName = fileInFolder.getName().split("_")[1];
@@ -68,6 +70,9 @@ public class DeleteServlet extends HttpServlet {
 		String[] filePath = ((String) session.getAttribute("Upload-File")).split(";;;");
 		String updatedFilePath = "";
 		for(String files: filePath) {
+			if(filePath.length == 1 && files.equals("")) {
+				break;
+			}
 			String fileNameFromSession = getFileNameFromPath(files);
 			if(fileName.equals(fileNameFromSession)) {
 				continue;
