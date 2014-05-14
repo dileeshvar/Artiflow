@@ -41,7 +41,7 @@ nv.addGraph(function() {
              .x(function(d) { return d[0] })
              .y(function(d) { return d[1]})
              .color(d3.scale.category10().range())
-             .average(function(d) { return d.mean/100; })
+             .average(function(d) {return d.mean/100;})
              .transitionDuration(300)
              .clipVoronoi(false);
 
@@ -51,7 +51,7 @@ nv.addGraph(function() {
         });
 
   chart.yAxis
-      .tickFormat(d3.format(','));
+      .tickFormat(d3.format('d'));
 
   d3.select('#chart1 svg')
       .datum(data)
@@ -113,7 +113,7 @@ text {
     </div>
 </head>
 <body class="pure-skin-mine">
-<H1>Line Plus Bar Chart with options</H1>
+<H1>Cumulative Line Chart with options</H1>
 <form class="pure-form" action="CumulativeLineServlet" method="post">
 	<fieldset>
 			<label for="left">Left Axis Options</label>
@@ -122,8 +122,8 @@ text {
 			  <option value="2">No. of Comments per User Story</option>
 			  <option value="3">No. of versions Per User Story</option>
 			</select>
-			<p>Start Date: <input type="text" name = "start" id="datepicker1"></p>
-			<p>End Date: <input type="text" name = "end" id="datepicker2"></p>
+			<p>Start Date: <input type="text" name = "start" id="datepicker1" value = "<c:out value="${startDa}"/>"></p>
+			<p>End Date: <input type="text" name = "end" id="datepicker2" value = "<c:out value="${endDa}"/>"></p>
 			<button type="submit" class="pure-button pure-button-primary">Submit</button>
 			</fieldset>
 			</form>

@@ -54,7 +54,7 @@ public class CumulativeLineServlet extends HttpServlet {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 			Timestamp start =  null;
 			Timestamp end =  null;
-			if(request.getParameter("start")!= null){
+			if(request.getParameter("start")!= null && !request.getParameter("start").equals("") && !request.getParameter("end").equals("")){
 				Date startDate = dateFormat.parse(request.getParameter("start"));
 				Date endDate = dateFormat.parse(request.getParameter("end"));
 				start = new Timestamp(startDate.getTime());
@@ -63,6 +63,8 @@ public class CumulativeLineServlet extends HttpServlet {
 			ChartDataBuilder jSONBuilder = new ChartDataBuilder("localhost", "artiflow");
 			request.setAttribute("testData",jSONBuilder.stackedAreaChartJson(yValue, start!=null ? start.toString().substring(0, 19):null, end!=null ? end.toString().substring(0, 19): null));
 			request.setAttribute("yValue", yValue);
+			request.setAttribute("startDa", start!=null ? dateFormat.format(start): null);
+			request.setAttribute("endDa", end!=null ? dateFormat.format(end): null);
 			request.getRequestDispatcher("/cumulativeLineChart.jsp").forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

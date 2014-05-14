@@ -66,7 +66,6 @@ public class HandleReviewServlet extends HttpServlet {
 			artifactID = Integer.parseInt(request.getParameter("a_id"));
 			reviewID = Integer.parseInt(request.getParameter("r_id"));
 			isAuthor = request.getParameter("is_a").equals("0") ? false : true;
-			System.out.println("author "+isAuthor+" rev"+reviewID+" auth"+artifactID);
 		}
 		if(false)
 			return false;
@@ -83,7 +82,6 @@ public class HandleReviewServlet extends HttpServlet {
 			ReviewManager manager = new ReviewManager(SQLServerIP, dbName);
 			if(comments!=null && !comments.trim().equals("")){
 				review = manager.updateComments(user.getUserId(), comments, signOff, reviewID, artifactID);
-				System.out.println("inside");
 			}
 			HandleReviewHandler handler = (HandleReviewHandler) HandleReviewFactory.getHandleReviewHandler();
 			HandleReviewListOfObjects handleReviewListOfObjects = handler.getReviewArtifactData(reviewID, artifactID);

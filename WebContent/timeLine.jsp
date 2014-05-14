@@ -53,7 +53,7 @@
 <hr>
 <br>
 <body class="pure-skin-mine" onload="onLoad();" onresize="onResize();">
-	<H2>TimeLine View - User Story </H2>
+	<H2>TimeLine View</H2>
 	<form class="pure-form" action="TimeLineCode" method="post">
 	<fieldset>
 			<label for="left">Select Perspective Options :</label><br>

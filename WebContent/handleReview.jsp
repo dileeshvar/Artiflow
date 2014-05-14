@@ -45,7 +45,6 @@ $('#code').load(
 $(this).val(),
 function(responseText, textStatus,
 XMLHttpRequest) {
-alert('ffdfs');
 });
 });
 });
@@ -77,8 +76,12 @@ ArrayList<Artifact> artifact = (ArrayList<Artifact>) request
 .getAttribute("artifacts");
 if (artifact.get(0).getArtifact_type().getArtifactTypeId() == 1) {
 %>
-<pre class="prettyprint" id="code">
+<iframe id="myFrame" width="100%" height="100%"
+style="border: 1px solid Black;"
+src="<c:out value="${artifacts[0].artifact_name}"></c:out>">
+<pre class="prettyprint">
 </pre>
+</iframe>
 <%
 }
 if (artifact.get(0).getArtifact_type().getArtifactTypeId() != 1) {
@@ -104,16 +107,6 @@ src="<c:out value="${artifacts[0].artifact_name}"></c:out>">
 </blockquote>
 <p>${element.userName}</p>
 </c:forEach>
-<blockquote class="example-obtuse" title="date here">
-<p>It's not what you look at that matters, it's what you see.</p>
-</blockquote>
-<p>Henry David Thoreau</p>
-<blockquote class="example-obtuse-left" title="date here">
-<p>It's not what you look at that matters, it's what you see.
-It's not what you look at that matters, it's what you see. It's
-not what you look.</p>
-</blockquote>
-<p>Henry , @ 12/11/13, 2:35 PM</p>
 </div>
 <div class="bottomdiv">
 <form method="post" name="handle" id="handle" action="HandleReview">
